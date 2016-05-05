@@ -1,9 +1,37 @@
-Problem # 1
+/* Pretend you are writing a game where the player can hold 3 types of items:
+   health potions, torches, and arrows. Create (i) an enum to identify the different
+   types of items and (ii) a using a built-in fixed array, store the number of each 
+   item the player is carrying. The player should start with 2 health potions,
+   5 torches, and 10 arrows. (iii) Write a function called countTotalItems() that 
+   returns how many items the player has in total and have the main function print it.*/
 
 #include <iostream>
 enum itemType
 {
-    
+    ITEMTYPE_POTION,
+    ITEMTYPE_TORCH,
+    ITEMTYPE_ARROW,
+    MAX_ITEMS
+};
+
+int countTotalItems(int itemNum[])
+{
+    int totalItems(0);
+    for (int jj = 0; jj < MAX_ITEMS; ++jj)
+	totalItems += itemNum[jj];
+
+    return totalItems;	
 }
 
-Problem # 2
+int main()
+{
+    // Initialize number of items via fixed built in array
+    int itemNum[MAX_ITEMS];
+    itemNum[ITEMTYPE_POTION] = 3;
+    itemNum[ITEMTYPE_TORCH]  = 5;
+    itemNum[ITEMTYPE_ARROW]  = 10;
+    
+    std::cout << countTotalItems(itemNum) << '\n';
+    
+    return 0;   
+}
