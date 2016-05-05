@@ -1,0 +1,90 @@
+/* 1) Create a struct that holds a student's name and grade (on a scale of 0 - 100).
+   2) Ask the user how many students they want to enter.
+   3) Dynamically allocate an array to hold all of the students.
+   4) Prompt the user for each name and grade.
+   5) Sort the list of grades (highest -> lowest).
+   6) Print all the names and grades in sorted order. 
+   7) Deallocate memory. */
+
+#include <iostream>
+#include <string>
+#include <utility>
+
+// name and grade of student
+struct Student
+{
+    std::string name;
+    int grade;
+};
+
+// Create a student struct by asking the user for name and grade
+Student getNamesAndGrades()
+{
+    std::cout << "Enter student name: ";
+    std::string name;
+    std::cin >> name;
+    std::cout << "Enter student grade: ";
+    int grade;
+    std::cin >> grade;
+    
+    Student student{name, grade};
+    return student;
+}
+
+// Sorts students by grade (from highest to lowest)
+void sortStudentByGrades(int numStudent, Student *students)
+{
+    
+    for (int startIndex = 0; startIndex < numStudent; ++startIndex)
+    {
+	int highestIndex = startIndex;
+	
+	for (int currentIndex = startIndex + 1; currentIndex < numStudent; ++currentIndex)
+	{
+	    if (students[currentIndex].grade > students[highestIndex].grade)
+		highestIndex = currentIndex;
+	}
+	
+	std::swap(students[startIndex], students[highestIndex]);
+    }
+    
+}
+
+// Prints student name and corresponding grade
+void printNamesAndGrades(Student student)
+{
+    std::cout << student.name << " got a grade of " << student.grade << "\n";
+    
+}
+
+int main()
+{
+
+    // Size of student (struct) array (array size changes dynamically)
+    int numStudent{0};
+    do
+    {
+        std::cout << "How many students are in the class? ";
+        std::cin >> numStudent;
+    } while (numStudent <= 1);
+    
+    // dynamical array containing student info
+    Student *students = new Student[numStudent];
+    
+    // get info for each student
+    for (int ii = 0; ii < numStudent; ++ii)
+	students[ii] = getNamesAndGrades();
+    
+    // sort students by grade
+    sortStudentByGrades(numStudent, students);
+    
+    // print student names and grades
+    for (int ii = 0; ii < numStudent; ++ii)
+	printNamesAndGrades(students[ii]);
+    
+    // delete array variable (otherwise leads to memory leaks)
+    delete[] students;
+    students = nullptr;
+    
+    return 0;
+}
