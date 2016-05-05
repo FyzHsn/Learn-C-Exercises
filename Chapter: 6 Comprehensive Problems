@@ -1,0 +1,9 @@
+Problem # 1
+
+#include <iostream>
+enum itemType
+{
+    
+}
+
+Problem # 2
